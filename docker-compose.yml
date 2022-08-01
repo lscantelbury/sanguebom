@@ -1,0 +1,29 @@
+version: '3.1'
+networks:
+    sanguebom:
+services:
+    database:
+        image: postgres
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: "postgres"
+            POSTGRES_DB: sanguebom
+        ports:
+            - "3301:5432"
+        volumes:
+            - ./data/postgres:/var/lib/postgresql/data
+        networks:
+            - sanguebom
+    pgadmin:
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: "aldsb.snf20@uea.edu.br"
+            PGADMIN_DEFAULT_PASSWORD: "123456"
+        ports:
+            - "16543:80"
+        depends_on:
+            - database
+        networks:
+            - sanguebom
+volumes:
+    database:
