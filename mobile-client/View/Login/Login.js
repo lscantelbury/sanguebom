@@ -1,11 +1,10 @@
-import { Text, Image, View, StyleSheet, TouchableOpacity} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Button } from 'react-native';
+import { Text, Image, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Gradient from '../../components/Grandient/Gradient';
 import InputField from '../../components/InputField/InputField';
 import logo from '../../assets/LogoSangueBom.png';
+import ButtonPrimary from '../../components/Button/ButtonPrimary';
 
-export default function Login() {
+export default function Login({ navigation }) {
     return (
         <Gradient>
             <View style={styles.container}>
@@ -13,13 +12,22 @@ export default function Login() {
                 <Text style={styles.title}>Entrar</Text>
                 <View style={styles.formGroup}>
                     <InputField placeholder={'E-mail'} required={true} style={styles.input} />
-                    <InputField placeholder={'Senha'}  required={true} style={styles.input} />
+                    <InputField placeholder={'Senha'} required={true} style={styles.input} />
                     {/* esqueceu a senha */}
                     <TouchableOpacity style={styles.forgotPassword}>
                         <Text style={styles.forgotPasswordText}>Esqueceu a senha?</Text>
                     </TouchableOpacity>
+                    <ButtonPrimary onPress={() => {
+                    }}>entrar</ButtonPrimary>
+                    <TouchableOpacity onPress={
+                        () => {
+                            navigation.navigate('SignUp')
+                        }
+                    }>
+                        <Text style={styles.forgotPasswordText}>Ainda não possui uma conta? </Text>
+                    </TouchableOpacity>
+
                 </View>
-                <Button title={'Entrar'} />
             </View>
         </Gradient>
 
@@ -54,6 +62,17 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         color: '#fff',
-        fontFamily: 'Ubuntu',
+    },
+    forgotPasswordText: {
+        color: '#fff',
+        fontSize: 14,
+        textAlign: 'center',
+    },
+    forgotPassword: {
+        marginBottom: 10,
+        width: '100%',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
     }
+
 });

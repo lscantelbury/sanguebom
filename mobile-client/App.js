@@ -4,30 +4,28 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Gradient from './components/Grandient/Gradient';
 import logo from "./assets/LogoSangueBom.png";
 import Login from './View/Login/Login';
+import SignUp from './View/Login/SignUp';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Login />
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login" screenOptions={
+        {
+          headerShown: false,
+          cardStyle: {
+            backgroundColor: '#fff',
+          },
+        }
 
+      }>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="SignUp" component={SignUp} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundImage: 'linearGradient(to left, #f90, #ff1);',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  middle:{
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logo: {
-    width: '40%',
-    resizeMode: 'contain',
-  }
-});
