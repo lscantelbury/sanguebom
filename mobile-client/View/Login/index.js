@@ -18,6 +18,8 @@ export default function Login({ navigation }) {
                         <Text style={styles.forgotPasswordText}>Esqueceu a senha?</Text>
                     </TouchableOpacity>
                     <ButtonPrimary onPress={() => {
+                        
+                        navigation.navigate('Menu')
                     }}>entrar</ButtonPrimary>
                     <TouchableOpacity onPress={
                         () => {

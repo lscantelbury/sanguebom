@@ -3,8 +3,9 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Gradient from './components/Grandient/Gradient';
 import logo from "./assets/LogoSangueBom.png";
-import Login from './View/Login/Login';
-import SignUp from './View/Login/SignUp';
+import Login from './View/Login';
+import SignUp from './View/SignUp';
+import Menu from './View/Menu';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -24,6 +25,7 @@ export default function App() {
       }>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="Menu" component={Menu} />
       </Stack.Navigator>
     </NavigationContainer>
   );

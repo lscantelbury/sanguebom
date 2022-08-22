@@ -2,11 +2,11 @@ import { StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { View } from "react-native";
 
-export default function Gradient({ children }) {
+export default function Gradient({ children, styleCustom }) {
     return (
         <LinearGradient
         colors={["#FE5D97", "#FF5757"]}
-        style={styles.grad}
+        style={[styles.grad, styleCustom]}
         >
         {children}
         </LinearGradient>
