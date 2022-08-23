@@ -39,8 +39,6 @@ export default function Menu({ navigation }) {
                 <TextCard title="Mauro Henrique" onPress={() => { }} logo={logo}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 </TextCard>
-
-
             </View>
         </View>
 
@@ -96,5 +94,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 32,
     },
+    footer: {
+        width: '100%',
+        height: 50,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingTop: 32,
+        backgroundColor: '#ff5757',
+        position: 'absolute',
+        bottom: 0,
+    }
    
 });
