@@ -1,7 +1,7 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import icon from '../../assets/icone-edit.png';
 import userFoto from '../../assets/user.png';
-import ButtonPrimary from '../../components/Button/ButtonPrimary';
+import Button from '../../components/Button';
 import Gradient from '../../components/Grandient/Gradient';
 import InputField from '../../components/InputField';
 
@@ -51,9 +51,9 @@ export default function SignUp({ navigation }) {
 
 
 
-                        <ButtonPrimary onPress={() => { 
+                        <Button onPress={() => { 
                             navigation.navigate('Login')
-                        }}>cadastrar</ButtonPrimary>
+                        }}>cadastrar</Button>
                         <TouchableOpacity onPress={
                             () => {
                                 // Volta para a tela de login
