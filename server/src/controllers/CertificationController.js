@@ -10,4 +10,13 @@ export default {
     const certification = await Certification.create({cert_id_pk, user_id_pk, hosp_id_pk, cert_date, cert_tipo_sanguineo});
     return response.json(certification);
   },
+  async certificationByUser(request, response) {
+    const {user_id_pk} = request.params;
+    const certifications = await Certification.findAll({
+      where: {
+        user_id_pk
+      }
+    });
+    return response.json(certifications);
+  }
 };
