@@ -1,10 +1,8 @@
-import { Text, Image, View, StyleSheet, TouchableOpacity } from 'react-native';
-import Gradient from '../../components/Grandient/Gradient';
-import InputField from '../../components/InputField/InputField';
-import logo from '../../assets/user.png';
-import UserCombo from '../../components/UserCombo';
+import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import logo from '../../assets/user.png';
 import TextCard from '../../components/Card/TextCard';
+import UserCombo from '../../components/UserCombo';
 
 export default function Menu({ navigation }) {
     return (

@@ -1,8 +1,8 @@
-import { Text, Image, View, StyleSheet, TouchableOpacity } from 'react-native';
-import Gradient from '../../components/Grandient/Gradient';
-import InputField from '../../components/InputField/InputField';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import logo from '../../assets/LogoSangueBom.png';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
+import Gradient from '../../components/Grandient/Gradient';
+import InputField from '../../components/InputField/index';
 
 export default function Login({ navigation }) {
     return (

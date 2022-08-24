@@ -1,9 +1,9 @@
-import { Text, Image, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import Gradient from '../../components/Grandient/Gradient';
-import InputField from '../../components/InputField/InputField';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import icon from '../../assets/icone-edit.png';
 import userFoto from '../../assets/user.png';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
-import icon from '../../assets/icone-edit.png';
+import Gradient from '../../components/Grandient/Gradient';
+import InputField from '../../components/InputField';
 
 export default function SignUp({ navigation }) {
     return (
