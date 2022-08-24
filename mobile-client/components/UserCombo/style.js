@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 
 export const Button = styled.TouchableOpacity`
-    padding: 0;
+    padding: 0px;
     width: 75%;
 `;
 
@@ -14,22 +14,22 @@ export const UserCombo = styled.View`
 `
 
 export const ProfilePic = styled.Image`
-    width: 60;
-    height: 60;
-    border-radius: 60;
-    border-width: 2;
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    border-width: 2px;
     border-color: #ff5757;
 `
 
 export const RankingInfo = styled.View`
-    width: 40;
-    height: 25;
-    border-radius: 15;
-    margin-left: -25;
-    margin-top: 45;
+    width: 40px;
+    height: 25px;
+    border-radius: 15px;
+    margin-left: -25px;
+    margin-top: 45px;
 `
 
-export const RankingPos = styled.RankingPos`
-    font-size: 12;
+export const RankingPos = styled.View`
+    font-size: 12px;
     color: #fff;
 `

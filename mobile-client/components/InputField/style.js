@@ -4,10 +4,10 @@ export const TextInput = styled.TextInput`
     ${props => props.variant === "default" && `
         width: 100%;
         border-color: white;
-        border-width: 1;
+        border-width: 1px;
         color: #fff;
-        height: 50;
-        padding-left: 10;
-        border-radius: 3;
+        height: 50px;
+        padding-left: 10px;
+        border-radius: 3px;
     `}
 `
