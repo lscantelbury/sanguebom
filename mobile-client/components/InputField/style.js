@@ -10,4 +10,5 @@ export const TextInput = styled.TextInput`
         padding-left: 10px;
         border-radius: 3px;
     `}
+    ${props => props.style && props?.style}
 `

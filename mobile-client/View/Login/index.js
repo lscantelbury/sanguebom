@@ -1,36 +1,37 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import logo from '../../assets/LogoSangueBom.png';
 import ButtonPrimary from '../../components/Button/ButtonPrimary';
 import Gradient from '../../components/Grandient/Gradient';
 import InputField from '../../components/InputField/index';
+import { Container, ForgotPassword, ForgotPasswordText, FormGroup, Logo, SignUp, Title } from './style';
 
 export default function Login({ navigation }) {
     return (
         <Gradient>
-            <View style={styles.container}>
-                <Image source={logo} style={styles.logo} />
-                <Text style={styles.title}>Entrar</Text>
-                <View style={styles.formGroup}>
-                    <InputField placeholder={'E-mail'} required={true} style={styles.input} />
-                    <InputField placeholder={'Senha'} required={true} style={styles.input} />
+            <Container>
+                <Logo source={logo} resizeMode={'contain'}/>
+                <Title>Entrar</Title>
+                <FormGroup>
+                    <InputField placeholder={'E-mail'} required={true} style={'margin-bottom: 15px;'}/>
+                    <InputField placeholder={'Senha'} required={true} style={'margin-bottom: 15px;'}/>
                     {/* esqueceu a senha */}
-                    <TouchableOpacity style={styles.forgotPassword}>
-                        <Text style={styles.forgotPasswordText}>Esqueceu a senha?</Text>
-                    </TouchableOpacity>
+                    <ForgotPassword>
+                        <ForgotPasswordText>Esqueceu a senha?</ForgotPasswordText>
+                    </ForgotPassword>
                     <ButtonPrimary onPress={() => {
                         
                         navigation.navigate('Menu')
-                    }}>entrar</ButtonPrimary>
+                    }}>Entrar</ButtonPrimary>
                     <TouchableOpacity onPress={
                         () => {
                             navigation.navigate('SignUp')
                         }
                     }>
-                        <Text style={styles.forgotPasswordText}>Ainda não possui uma conta? </Text>
+                        <SignUp>Ainda não possui uma conta? </SignUp>
                     </TouchableOpacity>
 
-                </View>
-            </View>
+                </FormGroup>
+            </Container>
         </Gradient>
 
     );
