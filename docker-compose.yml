@@ -1,6 +1,7 @@
 version: '3.1'
 networks:
     sanguebom:
+        driver: bridge
 services:
     database:
         image: postgres
@@ -17,8 +18,8 @@ services:
     pgadmin:
         image: dpage/pgadmin4
         environment:
-            PGADMIN_DEFAULT_EMAIL: "aldsb.snf20@uea.edu.br"
-            PGADMIN_DEFAULT_PASSWORD: "123456"
+            PGADMIN_DEFAULT_EMAIL: "sanguebom@localhost.com"
+            PGADMIN_DEFAULT_PASSWORD: "sanguebom"
         ports:
             - "16543:80"
         depends_on:

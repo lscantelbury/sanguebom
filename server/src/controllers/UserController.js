@@ -42,4 +42,13 @@ export default {
       return response.status(500).json({ error: error.message });
     }
   },
+  async userById(request, response) {
+    const { user_id_pk } = request.params;
+    const user = await User.findOne({
+      where: {
+        user_id_pk,
+      },
+    });
+    return response.json(user);
+  }
 };
