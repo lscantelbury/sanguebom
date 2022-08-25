@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity } from 'react-native';
-import { CardButtons, CardImage, CardLeft, CardRight, CardText, CardTitle } from './style';
+import { CardButtons, CardImage, CardLeft, CardRight, CardText, CardTitle, Card } from './style';
 
 export default function TextCard({ children, title, logo }) {
     return (
@@ -14,20 +14,20 @@ export default function TextCard({ children, title, logo }) {
                 </CardText>
 
                 <CardButtons>
-                    <TouchableOpacity style={styles.cardButton}>
+                    <TouchableOpacity >
                         {/* Svg Like */}
-                        <Text style={styles.cardButtonText}>Seguir</Text>
+                        <Text >Seguir</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.cardButton}>
+                    <TouchableOpacity >
                         {/* Svg Message */}
-                        <Text style={styles.cardButtonText}>Mensagem</Text>
+                        <Text >Mensagem</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.cardButton}>
+                    <TouchableOpacity >
                         {/* Svg Share */}
-                        <Text style={styles.cardButtonText}>Compartilhar</Text>
+                        <Text >Compartilhar</Text>
                     </TouchableOpacity>
                 </CardButtons>
             </CardRight>
         </Card>
     );
-}
+} 
