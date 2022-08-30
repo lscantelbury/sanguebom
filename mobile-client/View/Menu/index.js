@@ -15,19 +15,36 @@ export default function Menu({ navigation, props }) {
                              navigation.navigate('Perfil', { 
                                 user: {
                                     name: 'Ingrid Bittencourt',
-                                    email: 'joao@gmail.com',
-                                    bio: 'Stay humble. Be kind. Work hard.' 
+                                    email: 'ingridinha@gmail.com',
+                                    bio: 'Stay humble. Be kind. Work hard.', 
+                                    position: '3'
                                 }
                              });
-                             }} position="12" />
+                             }} position="3" />
                         <Divider />
-                        <UserCombo sourceImg={logo} onpress={() => { }} position="1" />
-                        <UserCombo sourceImg={logo} onpress={() => { }} position="2" />
-                        <UserCombo sourceImg={logo} onpress={() => { }} position="3" />
-                        <UserCombo sourceImg={logo} onpress={() => { }} position="4" />
-                        <UserCombo sourceImg={logo} onpress={() => { }} position="5" />
-                        <UserCombo sourceImg={logo} onpress={() => { }} position="6" />
-                        <UserCombo sourceImg={logo} onpress={() => { }} position="7" />
+                        <UserCombo sourceImg={logo} onpress={() => {
+                                navigation.navigate('Perfil', { 
+                                    user: {
+                                        name: 'José Antunes',
+                                        email: 'jantuscara@gmail.com',
+                                        bio: 'Lorem ipsum serve para dizer o que é o que é.',
+                                        position: '1'
+
+                                    }
+                                });
+
+                         }} position="1" />
+                        <UserCombo sourceImg={logo} onpress={() => {
+                                navigation.navigate('Perfil', { 
+                                    user: {
+                                        name: 'João Silva',
+                                        email: 'jhon.si@gmail.com',
+                                        bio: 'tobe or notobe.',
+                                        position: '2'
+                                    }
+                                });
+                         }} position="2" />
+                         
                     </ScrollView>
                 </HeaderRight>
             </Header>

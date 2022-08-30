@@ -13,17 +13,17 @@ export const Header = styled.View`
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 400px;
+    height: 180px;
     background-color: #f4f;
-    margin-top: 60px;
     align-items: center;
+    top: -60px;
     justify-content: center;
     `
 
 export const ProfileView = styled.View`
     width: 100%;
     height: 100px;
-    top: -80px;
+    top: -140px;
     position: relative;
     border-radius: 100px;
     align-items: center;
@@ -33,10 +33,10 @@ export const Body = styled.View`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     width: 100%;
-    height: 100%;
-    padding-top: 100px; 
+    padding-top:80px;
+
     `
 
 export const ProfilePicture = styled.Image`
@@ -81,3 +81,6 @@ export const RankingText = styled.Text`
     text-align: center;
     font-weight: bold;
 ` 
+export const ScrollBody = styled.ScrollView`
+    width: 100%; 
+`
