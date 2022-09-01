@@ -1,21 +1,82 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useState } from 'react';
 import icon from '../../assets/icone-edit.png';
 import userFoto from '../../assets/user.png';
 import Button from '../../components/Button';
 import Gradient from '../../components/Grandient/Gradient';
 import InputField from '../../components/InputField';
+import api from '../../services/api';
+import * as ImagePicker from 'expo-image-picker';
+
+
 
 export default function SignUp({ navigation }) {
+    const options = {
+        mediaType: 'photo',
+        cameraType: 'front',
+        includeBase64: true,
+    }
+    const [user, setUser] = useState({
+        user_name: '',
+        user_email: '',
+        user_password: '',
+        user_rua: '',
+        user_cep: '',
+        user_cidade: '',
+        // bairro: '',
+        user_num_predial: '',
+        user_unidade_federal: '',
+        user_tipo_sanguineo: '',
+        user_profile_pic: '',
+        user_nascimento: '',
+        user_points: 0,
+    });
+    const [confirmPassword, setConfirmPassword] = useState('');
+    function handleSingUp(){
+        if(confirmPassword == user.user_password){
+            api.post("/create-user", user).then(response => {
+                console.log("usuário criado!", response);
+            }).catch(error => {
+                console.log("erro ao criar usuário!", error);
+            });
+        }
+        // api.post("/create-user", user).then(response => {
+        //     console.log(response);
+        //     navigation.navigate('Login');
+        // }).catch(error => {
+        //     console.log(error);
+        // });
+    }
+    
+
+    // Image picker 
+    
+    async function pickImage (){
+        const options = {
+            mediaType: 'photo',
+            base64: true,
+        }
+
+        let result = await ImagePicker.launchImageLibraryAsync(options);
+        if(!result.cancelled){
+            let base64Img = result.base64
+            setUser({
+                ...user,
+                user_profile_pic: base64Img,
+            })   
+
+        }
+
+    }
+    // console.log(user)
     return (
         <ScrollView>
             <Gradient>
                 <View style={styles.container}>
                     <Text style={styles.title}>Cadastrar</Text>
                     <View style={styles.imgSelector}>
-                        <Image source={userFoto} style={styles.logo} />
-                        <TouchableOpacity onPress={() => {
-                        }
-                        } style={styles.elementInsideFoto}>
+                        <Image source={user.user_profile_pic ?  {uri: 'data:image/jpeg;base64, ' + user.user_profile_pic} : userFoto   } style={styles.logo} />
+                        <TouchableOpacity onPress={pickImage} style={styles.elementInsideFoto}>
                             <Image source={icon} style={styles.icon} />
 
                         </TouchableOpacity>
@@ -24,36 +85,34 @@ export default function SignUp({ navigation }) {
                         {/* Form Group Title */}
                         <Text style={styles.formGroupTitle}>Dados Pessoais</Text>
                         <View style={styles.flexRow}>
-                            <InputField placeholder={'Nome'} required={true} style={styles.input2} />
-                            <InputField placeholder={'Sobrenome'} required={true} style={styles.input2} />
+                            <InputField placeholder={'Nome'} required={true} style={styles.input} onChangeText={(text) => setUser({...user, user_name: text})} autoCompleteType={'email'} />
+                            {/* <InputField placeholder={'Sobrenome'} required={true} style={styles.input2} onChangeText={(text) => setUser({...name, name: text})}/> */}
                         </View>
-                        <InputField placeholder={'E-mail'} required={true} style={styles.input} />
-                        <InputField placeholder={'Senha'} required={true} style={styles.input} />
-                        <InputField placeholder={'Confirmar Senha'} required={true} style={styles.input} />
+                        <InputField placeholder={'E-mail'} required={true} style={styles.input} onChangeText={(text) => setUser({...user, user_email: text})} autoCompleteType={'email'} keyboardType={'email-address'}/>
+                        <InputField placeholder={'Senha'} required={true} style={styles.input} onChangeText={(text) => setUser({...user, user_password: text})} secureTextEntry={true}/>
+                        <InputField placeholder={'Confirmar Senha'} required={true} style={styles.input} onChangeText={(text) => setConfirmPassword(text)} secureTextEntry={true}/>
                         <View style={styles.flexRow}>
-                            <InputField placeholder={'Tipo Sanguíneo'} required={true} style={styles.input2} />
-                            <InputField placeholder={'Data de Nascimento'} required={true} style={styles.input2} />
+                            <InputField placeholder={'Tipo Sanguíneo'} required={true} style={styles.input2} onChangeText={(text) => setUser({...user, user_tipo_sanguineo: text})}/>
+                            <InputField placeholder={'Data de Nascimento'} required={true} style={styles.input2} onChangeText={(text) => setUser({...user, user_nascimento: text})}/>
                         </View>
 
                         {/* Form Group Title */}
                         <Text style={styles.formGroupTitle}>Endereço</Text>
                         <View style={styles.flexRow}>
-                            <InputField placeholder={'Endereço'} required={true} style={styles.input2} />
-                            <InputField placeholder={'Nº'} required={true} style={styles.input3} />
-                            <InputField placeholder={'Bairro'} required={true} style={styles.input4} />
+                            <InputField placeholder={'Endereço'} required={true} style={styles.input2} onChangeText={(text) => setUser({...user, user_rua: text})}/>
+                            <InputField placeholder={'Nº'} required={true} style={styles.input3} onChangeText={(text) => setUser({...user, user_num_predial: text})} keyboardType={'number-pad'}/>
+                            <InputField placeholder={'Bairro'} required={true} style={styles.input4}/>
                         </View>
                         <View style={styles.flexRow}>
-                            <InputField placeholder={'CEP'} required={true} style={styles.input4} />
-                            <InputField placeholder={'Cidade'} required={true} style={styles.input2} />
-                            <InputField placeholder={'UF'} required={true} style={styles.input3} />
+                            <InputField placeholder={'CEP'} required={true} style={styles.input4} onChangeText={(text) => setUser({...user, user_cep: text})} keyboardType={'number-pad'}/>
+                            <InputField placeholder={'Cidade'} required={true} style={styles.input2} onChangeText={(text) => setUser({...user, user_cidade: text})}/>
+                            <InputField placeholder={'UF'} required={true} style={styles.input3} onChangeText={(text) => setUser({...user, user_unidade_federal: text})}/>
                         </View>
 
 
 
 
-                        <Button onPress={() => { 
-                            navigation.navigate('Login')
-                        }}>cadastrar</Button>
+                        <Button onPress={handleSingUp}>cadastrar</Button>
                         <TouchableOpacity onPress={
                             () => {
                                 // Volta para a tela de login
@@ -120,6 +179,8 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         resizeMode: 'contain',
+        borderRadius: 50,
+        
     },
     title: {
         fontSize: 24,
@@ -139,7 +200,7 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: 10,
     },
-    forgotPasswordText:{
+    forgotPasswordText: {
         fontSize: 14,
         color: '#fff',
         marginBottom: 40,

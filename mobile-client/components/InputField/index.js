@@ -9,10 +9,12 @@ and passed as props
 
 export default function InputField({
   placeholder,
-  secureTextEntry,
+  secureTextEntry = false,
   onChangeText,
   value,
   variant = "default",
+  keyboardType = "default",
+  autoCompleteType = "off",
   ...props
 }) {
   return (
@@ -23,6 +25,8 @@ export default function InputField({
       onChangeText={onChangeText}
       value={value}
       placeholderTextColor="#fff"
+      keyboardType={keyboardType}
+      autoCompleteType={autoCompleteType}
       {...props}
     />
   );

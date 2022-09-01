@@ -28,6 +28,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photoPermission": "Nosso aplicativo precisa acessar suas fotos.",
+        }
+      ]
+    ]
   }
 }
