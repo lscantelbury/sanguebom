@@ -35,17 +35,11 @@ export default function SignUp({ navigation }) {
     function handleSingUp(){
         if(confirmPassword == user.user_password){
             api.post("/create-user", user).then(response => {
-                console.log("usuário criado!", response);
+                navigation.navigate("Login");
             }).catch(error => {
                 console.log("erro ao criar usuário!", error);
             });
         }
-        // api.post("/create-user", user).then(response => {
-        //     console.log(response);
-        //     navigation.navigate('Login');
-        // }).catch(error => {
-        //     console.log(error);
-        // });
     }
     
 
