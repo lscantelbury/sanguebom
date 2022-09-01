@@ -1,13 +1,13 @@
 import { Sequelize } from "sequelize";
 
 const connection = new Sequelize(
-  "sanguebom",
-  "postgres",
+  `${process.env.DATABASE_NAME}`,
+  `${process.env.DATABASE_USER}`,
   `${process.env.POSTGRES_PASSWORD}`,
   {
-    host: "localhost",
+    host: `${process.env.POSTGRES_HOST}`,
     dialect: "postgres",
-    port: "3301",
+    port: `${process.env.POSTGRES_PORT}`,
   }
 );
 
@@ -26,6 +26,6 @@ function handleTestConnection() {
 }
 
 // handleTestConnection();
-connection.sync();
+connection.sync({alter: true});
 
 export default connection;

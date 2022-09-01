@@ -47,7 +47,7 @@ const User = database.define(
       allowNull: false,
     },
     user_profile_pic: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     user_nascimento: {
