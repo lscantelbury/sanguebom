@@ -64,6 +64,6 @@ export default {
     if (!(await bcrypt.compare(user_password, user.user_password))) {
       return response.status(401).json({ error: "Invalid password" });
     }
-    return response.status(200).json({message: "User logged in successfully"});
+    return response.status(200).json({message: "User logged in successfully", user});
   }
 };
