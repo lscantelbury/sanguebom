@@ -1,108 +1,116 @@
-import { Text, Image, View, StyleSheet, TouchableOpacity } from 'react-native';
-import Gradient from '../../components/Grandient/Gradient';
-import InputField from '../../components/InputField/InputField';
-import logo from '../../assets/user.png';
-import UserCombo from '../../components/UserCombo';
+import { View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import logo from '../../assets/user.png';
 import TextCard from '../../components/Card/TextCard';
+import { TextArea } from '../../components/InputArea/style';
+import UserCombo from '../../components/UserCombo';
+import Button from '../../components/Button';
+import { Container, Divider, Body, Header, HeaderRight } from './style';
+import { useState } from 'react';
 
-export default function Menu({ navigation }) {
+
+
+export default function Menu({ navigation, route }) {
+
+
+    const [message, setMessage] = useState(
+        {
+            post_type: 1,
+            post_text: '',
+            post_user: '',
+            post_points_to_share: 0,
+        }
+    );
+
     return (
-        <View style={styles.container}>
-            <View style={styles.Header}>
-                <View style={styles.HeaderLeft}>
-                    <UserCombo sourceImg={logo} onpress={() => { }} position="12" />
-                    <View style={styles.divider}></View>
-                </View>
-                <View style={styles.HeaderRight}>
+        <Container>
+            <Header>
+                <HeaderRight>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <UserCombo sourceImg={logo} onpress={() => { }} position="1" />
-                        <UserCombo sourceImg={logo} onpress={() => { }} position="2" />
-                        <UserCombo sourceImg={logo} onpress={() => { }} position="3" />
-                        <UserCombo sourceImg={logo} onpress={() => { }} position="4" />
-                        <UserCombo sourceImg={logo} onpress={() => { }} position="5" />
-                        <UserCombo sourceImg={logo} onpress={() => { }} position="6" />
-                        <UserCombo sourceImg={logo} onpress={() => { }} position="7" />
+                        <UserCombo sourceImg={logo} onpress={() => {
+                            navigation.navigate('Perfil', {
+                                user: {
+                                    name: 'Ingrid Bittencourt',
+                                    email: 'ingridinha@gmail.com',
+                                    bio: 'Stay humble. Be kind. Work hard.',
+                                    position: '3'
+                                }
+                            });
+                        }} position="3" />
+                        <Divider />
+                        <UserCombo sourceImg={logo} onpress={() => {
+                            navigation.navigate('Perfil', {
+                                user: {
+                                    name: 'José Antunes',
+                                    email: 'jantuscara@gmail.com',
+                                    bio: 'Lorem ipsum serve para dizer o que é o que é.',
+                                    position: '1'
+
+                                }
+                            });
+
+                        }} position="1" />
+                        <UserCombo sourceImg={logo} onpress={() => {
+                            navigation.navigate('Perfil', {
+                                user: {
+                                    name: 'João Silva',
+                                    email: 'jhon.si@gmail.com',
+                                    bio: 'tobe or notobe.',
+                                    position: '2'
+                                }
+                            });
+                        }} position="2" />
+
                     </ScrollView>
+                </HeaderRight>
+            </Header>
+
+            <Body>
+                {/* TextArea Send Message */}
+                <View style={
+                    {
+                        width: '80%',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'flex-start',
+                        height: 80,
+                        marginBottom: 30,
+
+                    }
+                }>
+
+                    <TextArea
+                        placeholder="Send Message"
+                        placeholderTextColor="#FE5D97"
+                        multiline={true}
+                        onChangeText={(text) => {
+                            setMessage({
+                                ...message,
+                                post_text: text,
+                            });
+                            
+                            
+                        }}
+
+                    />
+                    <Button onPress={() => {
+
+                        console.log(message);
+                    }} variant="send">></Button>
+
                 </View>
-            </View>
+                <TextCard title="Mauro Henrique" onPress={() => { }} logo={logo}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </TextCard>
 
-            <View style={styles.Body}>
                 <TextCard title="Mauro Henrique" onPress={() => { }} logo={logo}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 </TextCard>
-                
-                <TextCard title="Mauro Henrique" onPress={() => { }} logo={logo}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </TextCard>
-                
-                <TextCard title="Mauro Henrique" onPress={() => { }} logo={logo}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </TextCard>
-            </View>
-        </View>
 
+                <TextCard title="Mauro Henrique" onPress={() => { }} logo={logo}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </TextCard>
+            </Body>
+        </Container>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        width: '100%',
-        height: '100%',
-    },
-    Header: {
-        width: '100%',
-        height: 120,
-        borderBottomColor: '#ff5757',
-        borderBottomWidth: 3,
-        flexDirection: 'row',
-        display: 'flex',
-    },
-    HeaderLeft: {
-        width: '25%',
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        paddingLeft: 20,
-        paddingTop: 20,
-        flexDirection: 'row',
-
-    },
-    HeaderRight: {
-        width: '75%',
-        alignItems: 'flex-start',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        paddingLeft: 20,
-        paddingTop: 20,
-    },
-    divider: {
-        height: '50%',
-        width: 2,
-        marginLeft: 10,
-        backgroundColor: '#ff5757',
-        marginTop: 10,
-
-    },
-    Body: {
-        width: '100%',
-        height: '100%',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        paddingTop: 32,
-    },
-    footer: {
-        width: '100%',
-        height: 50,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        paddingTop: 32,
-        backgroundColor: '#ff5757',
-        position: 'absolute',
-        bottom: 0,
-    }
-   
-});

@@ -2,16 +2,10 @@ import { Text, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Menu from "../Menu";
 import { View } from "react-native";
+import ProfileScreen from "../Profile";
 
 const Tab = createBottomTabNavigator();
 
-function ProfileScreen() {
-    return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Text>Profile!</Text>
-        </View>
-    );
-}
 
 function RankingScreen() {
     return (
@@ -41,12 +35,12 @@ export default function Tabs({ navigation }) {
                             <Text style={{ color: color }}>Início</Text>
                         </View>
                     ),
-                    
+
                     headerShown: false,
                     tabBarShowLabel: false,
                     tabBarActiveTintColor: "#fe5868",
                     tabBarInactiveTintColor: "rgba(246, 110, 184, 0.8)",
-                  
+
 
                 }}
             />
@@ -73,7 +67,18 @@ export default function Tabs({ navigation }) {
                     tabBarInactiveTintColor: "rgba(246, 110, 184, 0.8)",
                 }}
             />
-            <Tab.Screen name="Perfil" component={ProfileScreen}
+            <Tab.Screen
+                name="Perfil"
+                component={ProfileScreen}
+                initialParams={
+                    {
+                        user: {
+                            name: "Ingrid Bittencourt",
+                            bio: "magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum",
+                            email: "ingridinha@gmail.com",
+                        }
+                    }
+                }
                 options={{
                     tabBarLabel: "Perfil",
                     tabBarIcon: ({ color }) => (
@@ -94,7 +99,6 @@ export default function Tabs({ navigation }) {
                     tabBarShowLabel: false,
                     tabBarActiveTintColor: "#fe5868",
                     tabBarInactiveTintColor: "rgba(246, 110, 184, 0.8)",
-
                 }}
             />
         </Tab.Navigator>
