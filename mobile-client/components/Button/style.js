@@ -11,6 +11,18 @@ export const BaseButton = styled.TouchableOpacity`
     align-items: center;
     justify-content: center;
     `}
+    ${props => props.variant === "send" && `
+    background-color: #FE5D97;
+    border-radius: 5px;
+    width: 20%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    margin:0;
+    padding:0;
+    margin-left: 5px;
+
+    `}
 `
 
 export const Text = styled.Text`

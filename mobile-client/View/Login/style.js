@@ -41,3 +41,14 @@ export const SignUp = styled.Text`
     color: #fff;
     text-align: center;
 `
+
+export const Error = styled.View`
+    width: 100%;
+    margin-top: 0px;
+`
+export const ErrorText = styled.Text`
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+`

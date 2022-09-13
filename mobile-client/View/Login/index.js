@@ -3,7 +3,7 @@ import logo from '../../assets/LogoSangueBom.png';
 import Button from '../../components/Button';
 import Gradient from '../../components/Grandient/Gradient';
 import InputField from '../../components/InputField/index';
-import { Container, ForgotPassword, ForgotPasswordText, FormGroup, Logo, SignUp, Title } from './style';
+import { Container, ForgotPassword, ForgotPasswordText, FormGroup, Logo, SignUp, Title, Error, ErrorText } from './style';
 import { useState } from 'react';
 import api from '../../services/api';
 
@@ -15,15 +15,23 @@ export default function Login({ navigation }) {
         user_password: '',
     });
 
+    const [isWrong, setIsWrong] = useState(false);
+
+  
+
     async function handleLogin() {
         await api.post("/user/login", user).then(
+            
             response => {
                 navigation.navigate("Menu");
             }
         ).catch(error => {
-            console.log("erro ao fazer login!", error);
+            // Ativa o modal de erro
+            setIsWrong(true);
+
+
         });
-        
+
     }
     return (
         <Gradient>
@@ -56,6 +64,12 @@ export default function Login({ navigation }) {
                                 })
                             }}
                     />
+                    {isWrong ? (
+                    <Error>
+                        <ErrorText>Usuario ou senha incorretos!</ErrorText>
+                    </Error>
+                    ) : null}
+
                     {/* esqueceu a senha */}
                     <ForgotPassword>
                         <ForgotPasswordText>Esqueceu a senha?</ForgotPasswordText>
