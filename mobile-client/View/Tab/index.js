@@ -1,8 +1,9 @@
-import { Text, Image } from "react-native";
+import { Text, Image, Alert } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Menu from "../Menu";
 import { View } from "react-native";
 import ProfileScreen from "../Profile";
+import { useEffect } from "react";
 
 const Tab = createBottomTabNavigator();
 
@@ -17,16 +18,51 @@ function RankingScreen() {
 
 export default function Tabs({ navigation, route }) {
     const { user } = route.params;
+
+    useEffect(() => {
+        function removeHeader() {
+            navigation.addListener('beforeRemove', (e) => {
+                e.preventDefault();
+
+                Alert.alert(
+                    'Deseja sair?',
+                    'Tem certeza que deseja sair de sua conta?',
+                    [
+                        {
+                            text: 'Não',
+                            style: 'cancel',
+                            onPress: () => { },
+                        },
+                        {
+                            text: 'Sim',
+                            style: 'destructive',
+                            onPress: () => {
+                                navigation.dispatch(e.data.action)
+                                // close the drawer
+                            },
+                        },
+                    ]
+                );
+            }
+            );
+        }
+        removeHeader();
+    }, []);
+
+
+
     return (
-        <Tab.Navigator 
+        <Tab.Navigator
             initialRouteName="Menu"
-            initialParams={{ user: user }}    
-                        
+            initialParams={{ user: user }}
+
+
         >
             <Tab.Screen
                 name="Home"
                 component={Menu}
                 initialParams={{ user: user }}
+
                 options={{
                     tabBarLabel: "Início",
                     tabBarIcon: ({ color }) => (

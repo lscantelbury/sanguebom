@@ -195,7 +195,11 @@ export default function Menu({ navigation, route }) {
                     renderItem={(post) => {
                         return (
                             
+                            // ISSO DAQUI É SÓ UM EXEMPLO DE COMO USAR O COMPONENTE TEXTCARD 
+                            // USEI PRA TESTAR SE TAVA FUNCIONANDO
                             (post.item.post_id_pk % Math.floor(Math.random() * 4)) != 0 ? ( 
+
+
                             <TextCard
                                 title={post.item.post_text}
                                 logo={logo}
