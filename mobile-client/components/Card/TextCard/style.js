@@ -50,8 +50,9 @@ export const CardButtons = styled.TouchableOpacity`
     display: flex;
     justify-content: space-between;
     text-align: center;
-    align-self: flex-end;
-    width: 100%;
+    align-self: center;
+    width: 90%;
     position: absolute;
-    bottom: 0px;
+    bottom: 10px;
+    
 `

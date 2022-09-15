@@ -69,7 +69,7 @@ export default function Menu({ navigation, route }) {
     }
 
     const [allPosts, setAllPosts] = useState();
-    
+
     function loadPosts() {
         api.get("/posts").then(response => {
             const shortedPostsById = response.data.sort((a, b) => {
@@ -84,11 +84,17 @@ export default function Menu({ navigation, route }) {
         });
     }
 
-    useEffect(() => {    
+    useEffect(() => {
         loadPosts();
     }, []);
     const [refreshing, setRefreshing] = useState(true);
 
+    function checkMessage() {
+        if (message.post_text.length > 0) {
+            return true;
+        }
+        return false;
+    }
     return (
         <Container>
             <Header>
@@ -159,54 +165,83 @@ export default function Menu({ navigation, route }) {
 
                     />
                     <Button onPress={() => {
-                        sendPost();
-                        setMessage({
-                            ...message,
-                            post_text: '',
-                        });
+
+                        if (checkMessage()) {
+                            sendPost();
+                            setMessage({
+                                ...message,
+                                post_text: '',
+                            });
+                        } else {
+                            console.log("mensagem vazia");
+                        }
                     }} variant="send">send</Button>
 
                 </View>
 
 
-                    
-                    <FlatList
-                        style={
-                            {
-                                width: '100%',
-                                padding: 0,
-                                margin: 0,
-                            }
-                        }
-                        alignItems="center"
-                        data={allPosts}
-                        keyExtractor={(post) => post.post_id_pk}
-                        renderItem={(post) => {
-                            return (
-                                <TextCard title={post.item.post_text} logo={logo} key={post.item.post_id_pk} style={
-                                    { flex: 1 }
-                                } />
-                            )
-                        }}
-                        contentContainerStyle={
-                            {
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }
-                        }
-                        showsVerticalScrollIndicator={false}
-                        refreshControl={
-                            
-                            <RefreshControl
-                                refreshing={refreshing}
-                                onRefresh={loadPosts}
-                                progressBackgroundColor="#FE5D97"
-                                colors={["#FFF"]}
-                                progressViewOffset={10}
-                                />
-                        }
 
-                    />
+                <FlatList
+                    style={
+                        {
+                            width: '100%',
+                            padding: 0,
+                            margin: 0,
+                        }
+                    }
+                    alignItems="center"
+                    data={allPosts}
+                    keyExtractor={(post) => post.post_id_pk}
+                    renderItem={(post) => {
+                        return (
+                            
+                            (post.item.post_id_pk % Math.floor(Math.random() * 4)) != 0 ? ( 
+                            <TextCard
+                                title={post.item.post_text}
+                                logo={logo}
+                                key={post.item.post_id_pk}
+                                style={
+                                    {
+                                        flex: 1
+                                    }
+                                }
+                                commentCount="0"
+                                 />
+                            ) : (
+                                <TextCard
+                                title={post.item.post_text}
+                                logo={logo}
+                                key={post.item.post_id_pk}
+                                style={
+                                    {
+                                        flex: 1
+                                    }
+                                }
+                                variant="liked"
+                                commentCount={post.item.post_id_pk}
+                                />
+                            )
+
+                        )
+                    }}
+                    contentContainerStyle={
+                        {
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }
+                    }
+                    showsVerticalScrollIndicator={false}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={loadPosts}
+                            progressBackgroundColor="#FE5D97"
+                            colors={["#FFF"]}
+                            progressViewOffset={10}
+                        />
+                    }
+
+                />
 
 
 
