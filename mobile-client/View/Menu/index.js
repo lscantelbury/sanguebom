@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { FlatList, ListView, View, Text, VirtualizedList, RefreshControl, ActivityIndicator, StatusBar } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import logo from '../../assets/user.png';
 import TextCard from '../../components/Card/TextCard';
@@ -6,63 +6,128 @@ import { TextArea } from '../../components/InputArea/style';
 import UserCombo from '../../components/UserCombo';
 import Button from '../../components/Button';
 import { Container, Divider, Body, Header, HeaderRight } from './style';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import api from '../../services/api';
+import insertionSortUserByPoints from '../../utils/insertionSortByPoints.js';
 
 
 
 export default function Menu({ navigation, route }) {
 
+    // Map Users
+    const [allUsers, setAllUsers] = useState([
+        {
+            user_name: '',
+            user_email: '',
+            user_blood_type: '',
+            user_id: '',
+            user_pic: '',
+        }
+    ]);
 
+    const user = {
+        user_name: route.params.user.user_name,
+        user_email: route.params.user.user_email,
+        user_blood_type: route.params.user.user_tipo_sanguineo,
+        user_id: route.params.user.user_id_pk,
+        user_pic: route.params.user.user_profile_pic,
+    }
+
+
+
+    useEffect(() => {
+        function loadUsers() {
+            api.get("/users").then(response => {
+                setAllUsers(insertionSortUserByPoints(response.data));
+            }).catch(error => {
+                console.log("erro ao carregar usuários!", error);
+            });
+        }
+        loadUsers();
+    }, []);
+
+
+
+    // Message
     const [message, setMessage] = useState(
         {
+            post_id_pk: '',
             post_type: 1,
             post_text: '',
-            post_user: '',
             post_points_to_share: 0,
         }
     );
+
+
+    function sendPost() {
+
+        api.post("/posts/create-post", message).then(response => {
+            loadPosts();
+        }).catch(error => {
+            console.log("erro ao enviar post!", error);
+        });
+    }
+
+    const [allPosts, setAllPosts] = useState();
+    
+    function loadPosts() {
+        api.get("/posts").then(response => {
+            const shortedPostsById = response.data.sort((a, b) => {
+                return b.post_id_pk - a.post_id_pk;
+            });
+
+            setAllPosts(shortedPostsById);
+
+            setRefreshing(false);
+        }).catch(error => {
+            console.log("erro ao carregar posts!", error);
+        });
+    }
+
+    useEffect(() => {    
+        loadPosts();
+    }, []);
+    const [refreshing, setRefreshing] = useState(true);
 
     return (
         <Container>
             <Header>
                 <HeaderRight>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <UserCombo sourceImg={logo} onpress={() => {
+                        <UserCombo sourceImg={user.user_pic ? { uri: 'data:image/jpeg;base64, ' + user.user_pic } : logo} onpress={() => {
                             navigation.navigate('Perfil', {
                                 user: {
-                                    name: 'Ingrid Bittencourt',
-                                    email: 'ingridinha@gmail.com',
+                                    name: user.user_name,
+                                    email: user.user_email,
                                     bio: 'Stay humble. Be kind. Work hard.',
                                     position: '3'
                                 }
                             });
                         }} position="3" />
                         <Divider />
-                        <UserCombo sourceImg={logo} onpress={() => {
-                            navigation.navigate('Perfil', {
-                                user: {
-                                    name: 'José Antunes',
-                                    email: 'jantuscara@gmail.com',
-                                    bio: 'Lorem ipsum serve para dizer o que é o que é.',
-                                    position: '1'
 
-                                }
-                            });
+                        {
+                            allUsers.map((user, index) => {
+                                return (
+                                    <UserCombo key={index} sourceImg={user.user_profile_pic ? { uri: 'data:image/jpeg;base64, ' + user.user_profile_pic } : logo} onpress={() => {
+                                        navigation.navigate('Perfil', {
+                                            user: {
+                                                name: user.user_name,
+                                                email: user.user_email,
+                                                bio: 'Stay humble. Be kind. Work hard.',
+                                                position: index + 1
+                                            }
+                                        });
+                                    }} position={index + 1} />
+                                );
+                            })
+                        }
 
-                        }} position="1" />
-                        <UserCombo sourceImg={logo} onpress={() => {
-                            navigation.navigate('Perfil', {
-                                user: {
-                                    name: 'João Silva',
-                                    email: 'jhon.si@gmail.com',
-                                    bio: 'tobe or notobe.',
-                                    position: '2'
-                                }
-                            });
-                        }} position="2" />
+
 
                     </ScrollView>
                 </HeaderRight>
+
             </Header>
 
             <Body>
@@ -75,7 +140,6 @@ export default function Menu({ navigation, route }) {
                         alignItems: 'flex-start',
                         height: 80,
                         marginBottom: 30,
-
                     }
                 }>
 
@@ -83,33 +147,69 @@ export default function Menu({ navigation, route }) {
                         placeholder="Send Message"
                         placeholderTextColor="#FE5D97"
                         multiline={true}
+                        value={message.post_text}
                         onChangeText={(text) => {
                             setMessage({
                                 ...message,
                                 post_text: text,
                             });
-                            
-                            
+
+
                         }}
 
                     />
                     <Button onPress={() => {
-
-                        console.log(message);
-                    }} variant="send">></Button>
+                        sendPost();
+                        setMessage({
+                            ...message,
+                            post_text: '',
+                        });
+                    }} variant="send">send</Button>
 
                 </View>
-                <TextCard title="Mauro Henrique" onPress={() => { }} logo={logo}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </TextCard>
 
-                <TextCard title="Mauro Henrique" onPress={() => { }} logo={logo}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </TextCard>
 
-                <TextCard title="Mauro Henrique" onPress={() => { }} logo={logo}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </TextCard>
+                    
+                    <FlatList
+                        style={
+                            {
+                                width: '100%',
+                                padding: 0,
+                                margin: 0,
+                            }
+                        }
+                        alignItems="center"
+                        data={allPosts}
+                        keyExtractor={(post) => post.post_id_pk}
+                        renderItem={(post) => {
+                            return (
+                                <TextCard title={post.item.post_text} logo={logo} key={post.item.post_id_pk} style={
+                                    { flex: 1 }
+                                } />
+                            )
+                        }}
+                        contentContainerStyle={
+                            {
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }
+                        }
+                        showsVerticalScrollIndicator={false}
+                        refreshControl={
+                            
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={loadPosts}
+                                progressBackgroundColor="#FE5D97"
+                                colors={["#FFF"]}
+                                progressViewOffset={10}
+                                />
+                        }
+
+                    />
+
+
+
             </Body>
         </Container>
     );

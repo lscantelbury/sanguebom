@@ -9,7 +9,7 @@ import api from '../../services/api';
 
 
 export default function Login({ navigation }) {
-
+    // const [responseUser, setResponseUser] = useState();
     const [user, setUser] = useState({
         user_email: '',
         user_password: '',
@@ -23,7 +23,12 @@ export default function Login({ navigation }) {
         await api.post("/user/login", user).then(
             
             response => {
-                navigation.navigate("Menu");
+                // setResponseUser(response.data.user);
+                navigation.navigate("Menu",
+                {
+                    user: response.data.user
+                }
+                );
             }
         ).catch(error => {
             // Ativa o modal de erro

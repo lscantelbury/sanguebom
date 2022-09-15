@@ -16,15 +16,15 @@ export default function TextCard({ children, title, logo }) {
                 <CardButtons>
                     <TouchableOpacity >
                         {/* Svg Like */}
-                        <Text >Seguir</Text>
+                        <Text >S</Text>
                     </TouchableOpacity>
                     <TouchableOpacity >
                         {/* Svg Message */}
-                        <Text >Mensagem</Text>
+                        <Text >M</Text>
                     </TouchableOpacity>
                     <TouchableOpacity >
                         {/* Svg Share */}
-                        <Text >Compartilhar</Text>
+                        <Text >C</Text>
                     </TouchableOpacity>
                 </CardButtons>
             </CardRight>

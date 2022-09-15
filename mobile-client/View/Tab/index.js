@@ -15,10 +15,18 @@ function RankingScreen() {
     );
 }
 
-export default function Tabs({ navigation }) {
+export default function Tabs({ navigation, route }) {
+    const { user } = route.params;
     return (
-        <Tab.Navigator>
-            <Tab.Screen name="Home" component={Menu}
+        <Tab.Navigator 
+            initialRouteName="Menu"
+            initialParams={{ user: user }}    
+                        
+        >
+            <Tab.Screen
+                name="Home"
+                component={Menu}
+                initialParams={{ user: user }}
                 options={{
                     tabBarLabel: "Início",
                     tabBarIcon: ({ color }) => (
@@ -31,7 +39,8 @@ export default function Tabs({ navigation }) {
                                     resizeMode: 'contain',
                                 }
 
-                            } />
+                            }
+                            />
                             <Text style={{ color: color }}>Início</Text>
                         </View>
                     ),
