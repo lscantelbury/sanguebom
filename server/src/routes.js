@@ -18,6 +18,7 @@ router.get("/users/:user_id_pk/comments/:post_id_fk", CommentController.commentB
 router.get("/hospitals", HospitalController.index);
 router.post("/create-certification", CertificationController.create);
 router.get("/certifications", CertificationController.index);
+router.get("/certifications/:user_id_pk", CertificationController.certificationByUser);
 router.post("/create-hospital", HospitalController.create);
 
 export default router;
