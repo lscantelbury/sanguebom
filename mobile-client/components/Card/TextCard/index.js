@@ -1,9 +1,9 @@
-import { Text, TouchableOpacity, Image } from 'react-native';
-import { CardButtons, CardImage, CardLeft, CardRight, CardText, CardTitle, Card } from './style';
+import { Image, Text, TouchableOpacity } from 'react-native';
+import { Card, CardButtons, CardImage, CardLeft, CardRight, CardText, CardTitle } from './style';
 
 export default function TextCard({ children, title, logo, variant, commentCount, sharePoints = 0}) {
     return (
-        <Card>
+        <Card testID='text-card'>
             <CardLeft>
                 <CardImage source={logo} />
             </CardLeft>
@@ -14,12 +14,12 @@ export default function TextCard({ children, title, logo, variant, commentCount,
                 </CardText>
 
                 <CardButtons>
-                    <TouchableOpacity  >
+                    <TouchableOpacity testID='icon' >
                         {
                             variant === 'liked' ?
-                                (<Image source={require('../../../assets/heart-full-icon.png')} />)
+                                (<Image testID='heart-full-icon' source={require('../../../assets/heart-full-icon.png')} />)
                                 :
-                                (<Image source={require('../../../assets/heart-icon.png')} />)
+                                (<Image testID='heart-icon' source={require('../../../assets/heart-icon.png')} />)
                         }
                     </TouchableOpacity>
                     <TouchableOpacity style={
@@ -30,7 +30,7 @@ export default function TextCard({ children, title, logo, variant, commentCount,
 
                     }>
                         <Image source={require('../../../assets/comment-icon.png')} />
-                        <Text
+                        <Text testID='comment-count'
                             style={
                                 {
                                     position: 'relative',
@@ -49,7 +49,7 @@ export default function TextCard({ children, title, logo, variant, commentCount,
                         }
                     >
                         <Image source={require('../../../assets/share-icon.png')} />
-                        <Text
+                        <Text testID='share-points'
                             style={
                                 {
                                     position: 'relative',
