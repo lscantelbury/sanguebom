@@ -1,17 +1,12 @@
-import { Text, Image } from "react-native";
+import { Text, Image, Alert } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Menu from "../Menu";
 import { View } from "react-native";
+import ProfileScreen from "../Profile";
+import { useEffect } from "react";
 
 const Tab = createBottomTabNavigator();
 
-function ProfileScreen() {
-    return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Text>Profile!</Text>
-        </View>
-    );
-}
 
 function RankingScreen() {
     return (
@@ -21,10 +16,53 @@ function RankingScreen() {
     );
 }
 
-export default function Tabs({ navigation }) {
+export default function Tabs({ navigation, route }) {
+    const { user } = route.params;
+
+    useEffect(() => {
+        function removeHeader() {
+            navigation.addListener('beforeRemove', (e) => {
+                e.preventDefault();
+
+                Alert.alert(
+                    'Deseja sair?',
+                    'Tem certeza que deseja sair de sua conta?',
+                    [
+                        {
+                            text: 'Não',
+                            style: 'cancel',
+                            onPress: () => { },
+                        },
+                        {
+                            text: 'Sim',
+                            style: 'destructive',
+                            onPress: () => {
+                                navigation.dispatch(e.data.action)
+                                // close the drawer
+                            },
+                        },
+                    ]
+                );
+            }
+            );
+        }
+        removeHeader();
+    }, []);
+
+
+
     return (
-        <Tab.Navigator>
-            <Tab.Screen name="Home" component={Menu}
+        <Tab.Navigator
+            initialRouteName="Menu"
+            initialParams={{ user: user }}
+
+
+        >
+            <Tab.Screen
+                name="Home"
+                component={Menu}
+                initialParams={{ user: user }}
+
                 options={{
                     tabBarLabel: "Início",
                     tabBarIcon: ({ color }) => (
@@ -37,16 +75,17 @@ export default function Tabs({ navigation }) {
                                     resizeMode: 'contain',
                                 }
 
-                            } />
+                            }
+                            />
                             <Text style={{ color: color }}>Início</Text>
                         </View>
                     ),
-                    
+
                     headerShown: false,
                     tabBarShowLabel: false,
                     tabBarActiveTintColor: "#fe5868",
                     tabBarInactiveTintColor: "rgba(246, 110, 184, 0.8)",
-                  
+
 
                 }}
             />
@@ -73,7 +112,18 @@ export default function Tabs({ navigation }) {
                     tabBarInactiveTintColor: "rgba(246, 110, 184, 0.8)",
                 }}
             />
-            <Tab.Screen name="Perfil" component={ProfileScreen}
+            <Tab.Screen
+                name="Perfil"
+                component={ProfileScreen}
+                initialParams={
+                    {
+                        user: {
+                            name: "Ingrid Bittencourt",
+                            bio: "magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum",
+                            email: "ingridinha@gmail.com",
+                        }
+                    }
+                }
                 options={{
                     tabBarLabel: "Perfil",
                     tabBarIcon: ({ color }) => (
@@ -94,7 +144,6 @@ export default function Tabs({ navigation }) {
                     tabBarShowLabel: false,
                     tabBarActiveTintColor: "#fe5868",
                     tabBarInactiveTintColor: "rgba(246, 110, 184, 0.8)",
-
                 }}
             />
         </Tab.Navigator>

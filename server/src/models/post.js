@@ -1,7 +1,8 @@
 import { DataTypes } from "sequelize";
 import database from "../database/connection.js";
 import User from "./user.js";
-import Hospital from "../models/hospital.js";
+import Hospital from "./hospital.js";
+import Comment from "./comment.js";
 
 const Post = database.define("post", {
     post_id_pk: {
@@ -34,5 +35,5 @@ const Post = database.define("post", {
 
 Post.belongsTo(User, { foreignKey: "user_id_fk", as: "user" });
 Post.belongsTo(Hospital, { foreignKey: "hospital_id_fk", as: "hospital" });
-
+Post.hasMany(Comment)
 export default Post;

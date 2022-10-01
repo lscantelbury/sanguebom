@@ -1,94 +1,67 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Image, Text, TouchableOpacity } from 'react-native';
+import { Card, CardButtons, CardImage, CardLeft, CardRight, CardText, CardTitle } from './style';
 
-export default function TextCard({ children, title, logo }) {
+export default function TextCard({ children, title, logo, variant, commentCount, sharePoints = 0}) {
     return (
-        <View style={styles.card}>
-            <View style={styles.cardLeft}>
-                <Image source={logo} style={styles.cardImg} />
-            </View>
-            <View style={styles.cardRight}>
-                <Text style={styles.cardTitle}>{title}</Text>
-                <Text style={styles.cardText}>
+        <Card testID='text-card'>
+            <CardLeft>
+                <CardImage source={logo} />
+            </CardLeft>
+            <CardRight>
+                <CardTitle>{title}</CardTitle>
+                <CardText>
                     {children}
-                </Text>
+                </CardText>
 
-                <View style={styles.cardButtons}>
-                    <TouchableOpacity style={styles.cardButton}>
-                        {/* Svg Like */}
-                        <Text style={styles.cardButtonText}>Seguir</Text>
+                <CardButtons>
+                    <TouchableOpacity testID='icon' >
+                        {
+                            variant === 'liked' ?
+                                (<Image testID='heart-full-icon' source={require('../../../assets/heart-full-icon.png')} />)
+                                :
+                                (<Image testID='heart-icon' source={require('../../../assets/heart-icon.png')} />)
+                        }
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.cardButton}>
-                        {/* Svg Message */}
-                        <Text style={styles.cardButtonText}>Mensagem</Text>
+                    <TouchableOpacity style={
+
+                        {
+                            flexDirection: 'row',
+                        }
+
+                    }>
+                        <Image source={require('../../../assets/comment-icon.png')} />
+                        <Text testID='comment-count'
+                            style={
+                                {
+                                    position: 'relative',
+                                    color: '#ff5757',
+                                    fontWeight: 'bold',
+                                    top: -5,
+                                }
+                            }
+                        > {commentCount}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.cardButton}>
-                        {/* Svg Share */}
-                        <Text style={styles.cardButtonText}>Compartilhar</Text>
+                    <TouchableOpacity
+                        style={
+                            {
+                                flexDirection: 'row',
+                            }
+                        }
+                    >
+                        <Image source={require('../../../assets/share-icon.png')} />
+                        <Text testID='share-points'
+                            style={
+                                {
+                                    position: 'relative',
+                                    color: '#ff5757',
+                                    fontWeight: 'bold',
+                                    top: -5,
+                                }
+                            }
+                        > +{sharePoints}</Text>
                     </TouchableOpacity>
-                </View>
-            </View>
-        </View>
+                </CardButtons>
+            </CardRight>
+        </Card>
     );
-}
-
-
-const styles = StyleSheet.create({
-    card: {
-        width: '85%',
-        flexDirection: 'row',
-        display: 'flex',
-        shadowColor: '#0f0f0f',
-        shadowOpacity: 0.2,
-        shadowRadius: 1,
-        elevation: 1.5,
-        padding: 5,
-        borderRadius: 8,
-        border: '1px solid #ff5757',
-        marginBottom: 20,
-
-    },
-    cardImg: {
-        width: 54,
-        height: 54,
-        margin: 12,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    cardLeft: {
-        width: 90,
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-    },
-    cardButtons: {
-        flexDirection: 'row',
-        display: 'flex',
-        justifyContent: 'space-between',
-        textAlign: 'center',
-        alignSelf: 'flex-end',
-        width: '100%',
-        position: 'absolute',
-        bottom: 0,
-
-    },
-    cardRight: {
-        width: '70%',
-        height: '100%',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-    },
-    cardTitle: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: '#ff5757',
-        marginBottom: 5,
-        paddingTop: 10,
-    },
-    cardText: {
-        fontSize: 12,
-        color: '#0f0f0f',
-        marginBottom: 35,
-        paddingTop: 10,
-
-    }
-});
+} 

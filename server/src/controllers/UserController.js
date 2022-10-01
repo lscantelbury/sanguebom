@@ -50,5 +50,20 @@ export default {
       },
     });
     return response.json(user);
+  },
+  async login(request, response) {
+    const { user_email, user_password } = request.body;
+    const user = await User.findOne({
+      where: {
+        user_email,
+      },
+    });
+    if (!user) {
+      return response.status(404).json({ error: "User not found" });
+    }
+    if (!(await bcrypt.compare(user_password, user.user_password))) {
+      return response.status(401).json({ error: "Invalid password" });
+    }
+    return response.status(200).json({message: "User logged in successfully", user});
   }
 };

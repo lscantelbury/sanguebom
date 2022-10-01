@@ -10,8 +10,12 @@ const router = express.Router();
 
 router.get("/users", UserController.index);
 router.post("/create-user", UserController.create);
+router.post("/user/login", UserController.login);
 router.get("/users/:user_id_pk", UserController.userById);
 router.get("/users/:user_id_pk/certifications", CertificationController.certificationByUser);
+router.post("/posts/create-post", PostController.create);
+router.get("/posts", PostController.index);
+router.get("/posts/:user_id_fk", PostController.postByUser);
 router.get("/users/:user_id_pk/posts", PostController.postByUser);
 router.get("/users/:user_id_pk/likes", LikeController.likeByUser);
 router.get("/users/:user_id_pk/comments/:post_id_fk", CommentController.commentByUserInsidePost);
