@@ -2,21 +2,33 @@ import Certification from "../models/certification.js";
 
 export default {
   async index(request, response) {
+    try {
     const certifications = await Certification.findAll();
     return response.json(certifications);
+    } catch (error) {
+      response.status(400).json({ error: error.message });
+    }
   },
   async create(request, response) {
-    const {cert_id_pk, user_id_pk, hosp_id_pk, cert_date, cert_tipo_sanguineo} = request.body;
-    const certification = await Certification.create({cert_id_pk, user_id_pk, hosp_id_pk, cert_date, cert_tipo_sanguineo});
+    const {user_id_pk: userUserIdPk, hosp_id_pk: hospitalHospIdPk, cert_date, cert_tipo_sanguineo} = request.body;
+    try{
+    const certification = await Certification.create({userUserIdPk, hospitalHospIdPk, cert_date, cert_tipo_sanguineo});
     return response.json(certification);
+    } catch (error) {
+      return response.status(400).json({error: error.message});
+    }
   },
   async certificationByUser(request, response) {
-    const {user_id_pk} = request.params;
+    const {user_id_pk: userUserIdPk} = request.params;
+    try {
     const certifications = await Certification.findAll({
       where: {
-        user_id_pk
+        userUserIdPk,
       }
     });
     return response.json(certifications);
+    } catch (error) {
+      return response.status(400).json({error: "User not found"});
+    }
   }
 };
