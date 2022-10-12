@@ -19,6 +19,8 @@ function RankingScreen() {
 export default function Tabs({ navigation, route }) {
     const { user } = route.params;
 
+    
+
     useEffect(() => {
         function removeHeader() {
             navigation.addListener('beforeRemove', (e) => {

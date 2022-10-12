@@ -24,7 +24,7 @@ export default function Menu({ navigation, route }) {
             user_pic: '',
         }
     ]);
-
+    
     const user = {
         user_name: route.params.user.user_name,
         user_email: route.params.user.user_email,
@@ -33,7 +33,9 @@ export default function Menu({ navigation, route }) {
         user_pic: route.params.user.user_profile_pic,
     }
 
+    const [owner, setOwner] = useState(user); 
 
+    
 
     useEffect(() => {
         function loadUsers() {
@@ -51,17 +53,17 @@ export default function Menu({ navigation, route }) {
     // Message
     const [message, setMessage] = useState(
         {
-            post_id_pk: '',
             post_type: 1,
             post_text: '',
             post_points_to_share: 0,
+            post_owner_id: user.user_id,
         }
     );
 
 
     function sendPost() {
 
-        api.post("/posts/create-post", message).then(response => {
+        api.post("/create-post", message).then(response => {
             loadPosts();
         }).catch(error => {
             console.log("erro ao enviar post!", error);
@@ -193,16 +195,21 @@ export default function Menu({ navigation, route }) {
                     data={allPosts}
                     keyExtractor={(post) => post.post_id_pk}
                     renderItem={(post) => {
+
+                        const postOwner = allUsers.find((user) => {
+                            return user.user_id_pk === post.item.post_owner_id;
+                        });
+
                         return (
+
                             
                             // ISSO DAQUI É SÓ UM EXEMPLO DE COMO USAR O COMPONENTE TEXTCARD 
                             // USEI PRA TESTAR SE TAVA FUNCIONANDO
                             (post.item.post_id_pk % Math.floor(Math.random() * 4)) != 0 ? ( 
 
-
                             <TextCard
-                                title={post.item.post_text}
-                                logo={logo}
+                                title={postOwner.user_name}
+                                logo={{uri: 'data:image/jpeg;base64, ' + logo}}
                                 key={post.item.post_id_pk}
                                 style={
                                     {
@@ -210,11 +217,14 @@ export default function Menu({ navigation, route }) {
                                     }
                                 }
                                 commentCount="0"
-                                 />
+                                 >
+                                    {post.item.post_text}
+                            </TextCard>
+
                             ) : (
                                 <TextCard
-                                title={post.item.post_text}
-                                logo={logo}
+                                title={postOwner.user_name}
+                                logo={{uri: 'data:image/jpeg;base64, ' + logo}}
                                 key={post.item.post_id_pk}
                                 style={
                                     {
@@ -223,7 +233,9 @@ export default function Menu({ navigation, route }) {
                                 }
                                 variant="liked"
                                 commentCount={post.item.post_id_pk}
-                                />
+                                >
+                                    {post.item.post_text}
+                            </TextCard>
                             )
 
                         )

@@ -26,7 +26,7 @@ export default function Login({ navigation }) {
                 // setResponseUser(response.data.user);
                 navigation.navigate("Menu",
                 {
-                    user: response.data.user
+                    user: response.data
                 }
                 );
             }
